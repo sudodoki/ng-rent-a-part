@@ -69,3 +69,44 @@ slider .ui-slider-handle {
   font-weight: bold;
   cursor: pointer;
 }
+
+.active-link {
+  float: right;
+  margin: 5px;
+}
+.active-link + hr {
+  clear: both;
+}
+
+.details  {
+  min-width: 480px;
+  width: 50%;
+  display: inline-block;
+}
+.details strong {
+  display: inline-block;
+  min-width: 7em;
+  padding-right: 20px;
+}
+.details > p {
+  width: auto;
+  min-width: 200px;
+  padding: 10px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+ul.features {
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  width: 49%;
+  display: inline-block;
+  color: seagreen;
+  list-style: none;
+}
+.features li {
+  display: inline-block;
+  width: 50%;
+  padding: 20px;
+}

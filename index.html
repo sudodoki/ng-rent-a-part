@@ -23,20 +23,25 @@
                 <label>
                     Price <div class="small-slider" data-slider type="range"min="{{filterValues.price.min}}" max="{{filterValues.price.max}}" from="filterRanges.price.from" to="filterRanges.price.to"></div>
                 </label>
-                <a data-ng-click="activateEdit()" href='#'>Add Appartment</a>
             </form>
+            <a class='active-link' data-ng-click="activateEdit()" href='#'>Add Appartment</a>
             <hr/>
             <h2 data-ng-if="!matchedRentals.length">No appartments much this criteria, try something else.</h2>
             <div data-ng-if="matchedRentals.length">
-                <div data-ng-repeat="r in matchedRentals">
-                    <p><strong>City</strong> {{r.city}}</p>
-                    <p><strong>Address</strong> {{r.street}}</p>
-                    <p><strong>Rooms</strong> {{r.rooms}}</p>
-                    <p><strong>Price</strong> {{r.price}}</p>
-                    <span data-ng-repeat="feature in r.features">
-                        {{feature}} {{$last ? "" : "|"}}
+                <div class="appartment" data-ng-repeat="appartment in matchedRentals">
+                    <div class="details">
+                        <p><strong>City</strong> {{appartment.city}}</p>
+                        <p><strong>Address</strong> {{appartment.street}}</p>
+                        <p><strong>Rooms</strong> {{appartment.rooms}}</p>
+                        <p><strong>Price</strong> {{appartment.price}}</p>
+                    </div>
+                    <ul class="features">
+                        <li data-ng-repeat="feature in appartment.features">
+                    {{feature}}
                     </span>
-                    <a data-ng-click="removeById(r.id)" href="#">Remove</a>
+                    </ul>
+
+                    <a class='active-link' data-ng-click="removeById(appartment.id)" href="#">Remove</a>
                     <hr data-ng-if="!$last" />
                 </div>
                 <p><hr/><strong>Matches</strong> {{matchedRentals.length}} results</p>
