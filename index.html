@@ -14,7 +14,7 @@
         <div class="content" data-ng-controller="mainController">
             <h1>Rentals</h1>
             <br/>
-            <form>
+            <form data-ng-controller="filterController">
                 <input ng-model='filterBase.city' type="text" placeholder="Search city…">
                 <input ng-model='filterBase.street' type="text" placeholder="Search address…">
                 <label>

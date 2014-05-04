@@ -3,26 +3,26 @@
   'use strict';
 
   /* Controllers */
-  angular.module('myApp')
-    .controller('mainController', ['$scope', 'rentalsFactory', '$window', '$filter', function ($scope, rentalsFactory, $window, $filter) {
-      var roomsQty = [], possiblePrices = [];
-      $scope.matchedRentals = rentalsFactory;
+  angular.module('myApp').controller('mainController', ['$scope', 'rentalsFactory', 'filterStore', '$window', '$filter', function ($scope, rentalsFactory, filterStore, $window, $filter) {
+    $scope.matchedRentals = rentalsFactory;
 
+    $scope.$watch(function(){
+      return angular.extend({}, filterStore.filterBase(), filterStore.filterRanges());
+    }, function (newValue, oldValue) {
+      // rentals | filter:filterBase | filter:filterRanges:rangeCompare could be done in view,
+      // but we need it in 3 different places which will make 3 expensive watches thus this $watch
+      if (newValue && !angular.equals(newValue, oldValue)) {
+        $scope.matchedRentals = $filter('filter')(($filter('filter')(rentalsFactory, filterStore.filterBase())), filterStore.filterRanges(), filterStore.rangeCompare);
+      }
+    }, true);
+  }]);
+
+  angular.module('myApp').controller('filterController', ['$scope', 'rentalsFactory', 'filterStore', '$window', function ($scope, rentalsFactory, filterStore, $window) {
+      var roomsQty = [], possiblePrices = [];
       angular.forEach(rentalsFactory, function (appartment) {
         roomsQty.push(appartment.rooms);
         possiblePrices.push(appartment.price);
       });
-
-      $scope.$watch(function () {
-        return angular.extend({}, $scope.filterBase, $scope.filterRanges)
-      }, function (newValue, oldValue) {
-        // rentals | filter:filterBase | filter:filterRanges:rangeCompare could be done in view,
-        // but we need it in 3 different places which will make 3 expensive watches thus this $watch
-        if (newValue && !angular.equals(newValue, oldValue)) {
-          $scope.matchedRentals = $filter('filter')(($filter('filter')(rentalsFactory, $scope.filterBase)), $scope.filterRanges, $scope.rangeCompare);
-        }
-      }, true)
-
 
       $scope.filterValues = {
         rooms: {
@@ -34,27 +34,14 @@
           max: $window.Math.max.apply($window.Math, possiblePrices)
         }
       };
-      $scope.rangeCompare = function(actualValue, rangeObject) {
-        return (actualValue >= rangeObject.from) && (actualValue <= rangeObject.to);
-      }
+      filterStore.setFilterValues($scope.filterValues);
       function resetFilter(){
-        $scope.filterBase = {};
-        $scope.filterRanges = {
-          rooms: {
-            from: $scope.filterValues.rooms.min,
-            to: $scope.filterValues.rooms.max
-          },
-          price: {
-            from: $scope.filterValues.price.min,
-            to: $scope.filterValues.price.max
-          }
-        };
+        filterStore.reset();
       }
       resetFilter();
-    }])
-    .controller('filterController', ['$scope', function ($scope) {
-      angular.identity($scope);
-    }])
-  ;
+      $scope.filterBase = filterStore.filterBase();
+      $scope.filterRanges = filterStore.filterRanges();
+      $scope.debugFilter = filterStore;
+  }]);
 
 })();
