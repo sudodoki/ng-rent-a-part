@@ -29,3 +29,43 @@ slider .ui-slider-handle {
   margin: 5px;
   width: 20%;
 }
+
+.modal-bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #000;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 99;
+  display: block;
+  top: 0;
+  left: 0;
+}
+
+.modal {
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+  top: 100px;
+  left: 0;
+  background-color: #fff;
+  padding: 1.11111rem;
+  border: solid 1px #666;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.modal-medium {
+  margin-left: 10%;
+  width: 80%;
+}
+
+.close-modal {
+  font-size: 2.22222rem;
+  line-height: 1;
+  position: absolute;
+  top: 0.44444rem;
+  right: 0.61111rem;
+  color: #aaa;
+  font-weight: bold;
+  cursor: pointer;
+}

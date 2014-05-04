@@ -3,44 +3,65 @@
 
     <head>
         <meta charset="utf-8">
-<!-- TODO: remove
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>          -->
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
         <!-- styles -->
         <link rel="stylesheet" href="css/app.css"/>
         <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css"/>
     </head>
 
-    <body>
+    <body data-ng-cloak="">
         <div class="content" data-ng-controller="mainController">
             <h1>Rentals</h1>
             <br/>
             <form data-ng-controller="filterController">
-                <input ng-model='filterBase.city' type="text" placeholder="Search city…">
-                <input ng-model='filterBase.street' type="text" placeholder="Search address…">
+                <input ng-model="filterBase.city" type="text" placeholder="Search city…">
+                <input ng-model="filterBase.street" type="text" placeholder="Search address…">
                 <label>
-                    Rooms <div class='small-slider' data-slider type='range' min='{{filterValues.rooms.min}}' max='{{filterValues.rooms.max}}' from='filterRanges.rooms.from' to='filterRanges.rooms.to'>
+                    Rooms <div class="small-slider" data-slider type="range" min="{{filterValues.rooms.min}}" max="{{filterValues.rooms.max}}" from="filterRanges.rooms.from" to="filterRanges.rooms.to">
                     </div>
                 </label>
                 <label>
-                    Price <div class='small-slider' data-slider type='range'min='{{filterValues.price.min}}' max='{{filterValues.price.max}}' from='filterRanges.price.from' to='filterRanges.price.to'></div>
+                    Price <div class="small-slider" data-slider type="range"min="{{filterValues.price.min}}" max="{{filterValues.price.max}}" from="filterRanges.price.from" to="filterRanges.price.to"></div>
                 </label>
-                <a href='#'>Add Appartment</a>
+                <a ng-click="activateEdit()" href='#'>Add Appartment</a>
             </form>
             <hr/>
-            <h2 data-ng-if='!matchedRentals.length'>No appartments much this criteria, try something else.</h2>
-            <div data-ng-if='matchedRentals.length'>
+            <h2 data-ng-if="!matchedRentals.length">No appartments much this criteria, try something else.</h2>
+            <div data-ng-if="matchedRentals.length">
                 <div data-ng-repeat="r in matchedRentals">
                     <p><strong>City</strong> {{r.city}}</p>
                     <p><strong>Address</strong> {{r.street}}</p>
                     <p><strong>Rooms</strong> {{r.rooms}}</p>
                     <p><strong>Price</strong> {{r.price}}</p>
                     <span data-ng-repeat="feature in r.features">
-                        {{feature}} {{$last ? '' : '|'}}
+                        {{feature}} {{$last ? "" : "|"}}
                     </span>
-                    <a href="#">Remove</a>
-                    <hr ng-if='!$last' />
+                    <a data-ng-click="removeById(r.id)" href="#">Remove</a>
+                    <hr data-ng-if="!$last" />
                 </div>
                 <p><hr/><strong>Matches</strong> {{matchedRentals.length}} results</p>
+            </div>
+            <div data-ng-controller="newAppartmentController">
+                <div data-ng-click="close()" data-ng-show='editMode.on' class="modal-bg" >
+                </div>
+                <div data-ng-show='editMode.on' class="modal modal-medium">
+                    <h1>Add new appartment</h1>
+                    <form data-ng-submit="addRoom(newEntry)">
+                        <h2>General</h2>
+                        <label>City: <input required data-ng-model="newEntry.city" type="text" placeholder='City' /></label>
+                        <label>Address: <input required data-ng-model="newEntry.street" type="text" placeholder='Address' /></label>
+                        <label>Rooms: <input required data-ng-model="newEntry.rooms" type="number" step="1" min="0" placeholder='Rooms' /></label>
+                        <label>Price: <input required data-ng-model="newEntry.price" type="number" step="100" min="0" placeholder='Price' /></label>
+                        <hr />
+                        <h2>Feautre</h2>
+                        <label data-ng-repeat="feature in features">
+                            {{feature}} <input ng-click="toggleSelection(feature)" type="checkbox">
+                            {{$last ? '' : '|'}}
+                        </label>
+                        <input type="submit">
+                    </form>
+                    <a data-ng-click='close()' class="close-modal">×</a>
+                </div>
             </div>
         </div>
         <!-- scripts -->
