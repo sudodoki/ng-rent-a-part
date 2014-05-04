@@ -1,0 +1,14 @@
+<div class="details">
+    <p><strong>City</strong> {{appartment.city}}</p>
+    <p><strong>Address</strong> {{appartment.street}}</p>
+    <p><strong>Rooms</strong> {{appartment.rooms}}</p>
+    <p><strong>Price</strong> {{appartment.price}}</p>
+</div>
+<ul class="features">
+    <li data-ng-repeat="feature in appartment.features">
+{{feature}}
+</span>
+</ul>
+
+<a class='active-link' data-ng-click="removeById(appartment.id)" href="#">Remove</a>
+<hr data-ng-if="!$last" />
