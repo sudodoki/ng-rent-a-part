@@ -7,10 +7,10 @@
     $scope.matchedRentals = rentalsFactory;
     // Usually, I would tie editMode with URL to trigger separate route
     // but for sake of prototyping, I would go with parentCtrl object & binding to it
-    $scope.editMode = {on: false}
+    $scope.editMode = {on: false};
     $scope.activateEdit = function () {
       $scope.editMode.on = true;
-    }
+    };
     $scope.removeById = function (id) {
       // did want to move this to factory, but due to 1.1.5 nature
       // it was just too much trouble, given time constraint
@@ -55,14 +55,11 @@
           }
         };
       }
-      $scope.$watch(function () {return rentalsFactory.length}, function(newValue, oldValue){
-        console.log('calculatePossibleFilterValues called')
-        calculatePossibleFilterValues();
-      })
+      $scope.$watch(function () {return rentalsFactory.length; }, calculatePossibleFilterValues);
       function resetFilter(){
         filterStore.reset();
       }
-      calculatePossibleFilterValues()
+      calculatePossibleFilterValues();
       filterStore.setFilterValues($scope.filterValues);
       resetFilter();
       $scope.filterBase = filterStore.filterBase();
@@ -73,28 +70,26 @@
     $scope.features = angular.copy(features);
     $scope.newEntry = { features: []};
     $scope.toggleSelection = function toggleFeatureSelection(feature) {
-      var idx = $scope.newEntry.features.indexOf(feature)
+      var idx = $scope.newEntry.features.indexOf(feature);
       if (idx > -1) {
         $scope.newEntry.features.splice(idx, 1);
       } else {
         $scope.newEntry.features.push(feature);
       }
-    }
+    };
     $scope.close = function close(){
       $scope.editMode.on = false;
-    }
+    };
     $scope.addRoom = function addRoom(newRoom) {
-      console.log('addRoom called')
       var ids = $window.jQuery.map(rentalsFactory, function (app) {
-        return app.id
+        return app.id;
       }), maxId;
       maxId = $window.Math.max.apply($window.Math, ids);
       newRoom.id = maxId + 1;
-      console.log(newRoom);
       rentalsFactory.push(newRoom);
       $scope.newEntry = { features: []};
       $scope.close();
-    }
+    };
   }]);
 
 })();

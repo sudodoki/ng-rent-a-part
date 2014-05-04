@@ -14,8 +14,8 @@
             <h1>Rentals</h1>
             <br/>
             <form data-ng-controller="filterController">
-                <input ng-model="filterBase.city" type="text" placeholder="Search city…">
-                <input ng-model="filterBase.street" type="text" placeholder="Search address…">
+                <input data-ng-model="filterBase.city" type="text" placeholder="Search city…">
+                <input data-ng-model="filterBase.street" type="text" placeholder="Search address…">
                 <label>
                     Rooms <div class="small-slider" data-slider type="range" min="{{filterValues.rooms.min}}" max="{{filterValues.rooms.max}}" from="filterRanges.rooms.from" to="filterRanges.rooms.to">
                     </div>
@@ -23,7 +23,7 @@
                 <label>
                     Price <div class="small-slider" data-slider type="range"min="{{filterValues.price.min}}" max="{{filterValues.price.max}}" from="filterRanges.price.from" to="filterRanges.price.to"></div>
                 </label>
-                <a ng-click="activateEdit()" href='#'>Add Appartment</a>
+                <a data-ng-click="activateEdit()" href='#'>Add Appartment</a>
             </form>
             <hr/>
             <h2 data-ng-if="!matchedRentals.length">No appartments much this criteria, try something else.</h2>
@@ -55,7 +55,7 @@
                         <hr />
                         <h2>Feautre</h2>
                         <label data-ng-repeat="feature in features">
-                            {{feature}} <input ng-click="toggleSelection(feature)" type="checkbox">
+                            {{feature}} <input data-ng-click="toggleSelection(feature)" type="checkbox">
                             {{$last ? '' : '|'}}
                         </label>
                         <input type="submit">
