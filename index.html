@@ -13,31 +13,34 @@
     <body>
         <div class="content" data-ng-controller="mainController">
             <h1>Rentals</h1>
+            <br/>
             <form>
-                <input type="text" placeholder="Search city…">
-                <input type="text" placeholder="Search address…">
+                <input ng-model='filterBase.city' type="text" placeholder="Search city…">
+                <input ng-model='filterBase.street' type="text" placeholder="Search address…">
                 <label>
-                    Rooms <div class='small-slider' data-slider type='range' min='2' max='6' from='from' to='to'></div>
+                    Rooms <div class='small-slider' data-slider type='range' min='{{filterValues.rooms.min}}' max='{{filterValues.rooms.max}}' from='filterRanges.rooms.from' to='filterRanges.rooms.to'>
+                    </div>
                 </label>
                 <label>
-                    Price <div class='small-slider' data-slider type='range' min='2' max='6' from='from' to='to'></div>
+                    Price <div class='small-slider' data-slider type='range'min='{{filterValues.price.min}}' max='{{filterValues.price.max}}' from='filterRanges.price.from' to='filterRanges.price.to'></div>
                 </label>
                 <a href='#'>Add Appartment</a>
             </form>
             <hr/>
-            <div>
-                <div data-ng-repeat="r in rentals">
+            <h2 data-ng-if='!matchedRentals.length'>No appartments much this criteria, try something else.</h2>
+            <div data-ng-if='matchedRentals.length'>
+                <div data-ng-repeat="r in matchedRentals">
                     <p><strong>City</strong> {{r.city}}</p>
                     <p><strong>Address</strong> {{r.street}}</p>
                     <p><strong>Rooms</strong> {{r.rooms}}</p>
                     <p><strong>Price</strong> {{r.price}}</p>
                     <span data-ng-repeat="feature in r.features">
-                        {{feature}} {{!$last && '|'}}
+                        {{feature}} {{$last ? '' : '|'}}
                     </span>
                     <a href="#">Remove</a>
                     <hr ng-if='!$last' />
                 </div>
-                <p><hr/><strong>Matches</strong> 4 results</p>
+                <p><hr/><strong>Matches</strong> {{matchedRentals.length}} results</p>
             </div>
         </div>
         <!-- scripts -->

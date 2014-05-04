@@ -25,6 +25,7 @@ slider .ui-slider-handle {
 }
 .small-slider {
   display: inline-block;
-  max-width: 200px;
+  max-width: 160px;
+  margin: 5px;
   width: 20%;
 }
