@@ -151,6 +151,9 @@
                     factory.filterRanges[rangeName].to = factory.possibleRangeValues[rangeName].max;
                 }
             },
+            getPossibleRangeValues: function () {
+                return factory.possibleRangeValues
+            },
             setFilterValues: function (possibleValues) {
                 factory.possibleRangeValues = possibleValues;
             }
