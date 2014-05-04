@@ -1,10 +1,14 @@
-'use strict';
+/* global angular */
+(function(){
+  'use strict';
 
-/* Controllers */
+  /* Controllers */
+  angular.module('myApp')
+    .controller('mainController', ['$scope', 'rentalsFactory', function ($scope, rentalsFactory) {
+      $scope.rentals = rentalsFactory;
+    }])
+    .controller('filterController', ['$scope', function ($scope) {
+    }])
+  ;
 
-
-angular.module('myApp').controller('mainController', function ($scope, rentalsFactory) {
-    debugger
-    $scope.rentals = rentalsFactory;
-
-});
+})();

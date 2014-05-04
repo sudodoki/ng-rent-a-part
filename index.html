@@ -1,29 +1,52 @@
 <!doctype html>
 <html lang="en" ng-app="myApp">
-    
+
     <head>
         <meta charset="utf-8">
-
+<!-- TODO: remove
+<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>          -->
         <!-- styles -->
         <link rel="stylesheet" href="css/app.css"/>
         <link rel="stylesheet" href="css/jquery-ui-1.10.3.custom.css"/>
     </head>
-    
+
     <body>
-        
-        <!-- TODO: here we go -->
-        <div style="font-weight:800;font-size:18px;margin:100px 0 0 100px;color:slategray">LOOK WHAT THE FACTORY BROUGHT:</div>
-        <div data-ng-controller="mainController">
-            <div data-ng-repeat="r in rentals" style="margin:20px 0 20px 100px;">{{$index+1}}. {{r}}</div>
+        <div class="content" data-ng-controller="mainController">
+            <h1>Rentals</h1>
+            <form>
+                <input type="text" placeholder="Search city…">
+                <input type="text" placeholder="Search address…">
+                <label>
+                    Rooms <div class='small-slider' data-slider type='range' min='2' max='6' from='from' to='to'></div>
+                </label>
+                <label>
+                    Price <div class='small-slider' data-slider type='range' min='2' max='6' from='from' to='to'></div>
+                </label>
+                <a href='#'>Add Appartment</a>
+            </form>
+            <hr/>
+            <div>
+                <div data-ng-repeat="r in rentals">
+                    <p><strong>City</strong> {{r.city}}</p>
+                    <p><strong>Address</strong> {{r.street}}</p>
+                    <p><strong>Rooms</strong> {{r.rooms}}</p>
+                    <p><strong>Price</strong> {{r.price}}</p>
+                    <span data-ng-repeat="feature in r.features">
+                        {{feature}} {{!$last && '|'}}
+                    </span>
+                    <a href="#">Remove</a>
+                    <hr ng-if='!$last' />
+                </div>
+                <p><hr/><strong>Matches</strong> 4 results</p>
+            </div>
         </div>
-        
         <!-- scripts -->
         <script src="lib/angular/angular.min.1.1.5.js"></script>
         <script src="lib/jquery/jquery-1.10.1.min.js"></script>
         <script src="lib/jquery/ui/jquery.ui.core.min.js"></script>
         <script src="lib/jquery/ui/jquery.ui.widget.min.js"></script>
         <script src="lib/jquery/ui/jquery.ui.mouse.min.js"></script>
-        <script src="lib/jquery/ui/jquery.ui.slider.min.js"></script>        
+        <script src="lib/jquery/ui/jquery.ui.slider.min.js"></script>
         <script src="js/app.js"></script>
         <script src="js/services.js"></script>
         <script src="js/factories.js"></script>

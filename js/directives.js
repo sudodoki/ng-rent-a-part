@@ -1,199 +1,203 @@
-'use strict';
+/* global angular */
+(function(){
 
-/* Directives */
+  'use strict';
 
+  /* Directives */
 
-// slider direcive definition.
-angular.module('myApp').directive('slider', function () {
 
-      return {
+  // slider direcive definition.
+  angular.module('myApp').directive('slider', function () {
 
-          // works for elements and attributes.
-          restrict: 'EA',
+        return {
 
-          // isolated scope.
-          scope: {
+            // works for elements and attributes.
+            restrict: 'EA',
 
-              min: '@',			// minimal value
-              max: '@',			// maximal value
-              step: '@',		// knob drag step
-              type: '@',		// slider type: sliderFactory.modes
-              trigger: '@',		// update scope trigger: sliderFactory.triggers
-              orientation: '@',	// slider orientation: sliderFactory.orientation
-              from: '=',		// range from value
-              to: '=',			// range to value
-              value: '='		// from/to/value modes value
-          },
+            // isolated scope.
+            scope: {
 
-          // logic.
-          link: function (scope, element, attrs) {
+                min: '@',     // minimal value
+                max: '@',     // maximal value
+                step: '@',    // knob drag step
+                type: '@',    // slider type: sliderFactory.modes
+                trigger: '@',   // update scope trigger: sliderFactory.triggers
+                orientation: '@', // slider orientation: sliderFactory.orientation
+                from: '=',    // range from value
+                to: '=',      // range to value
+                value: '='    // from/to/value modes value
+            },
 
-              // helper functions
+            // logic.
+            link: function (scope, element, attrs) {
 
-              // update on slider value changes.
-              function updateOnChange(ev, ui) {
+                // helper functions
 
-                  scope.$apply(function () {
+                // update on slider value changes.
+                function updateOnChange(ev, ui) {
 
-                      if (scope.type == 'range') {
+                    scope.$apply(function () {
 
-                          scope.from = ui.values[0];
-                          scope.to = ui.values[1];
+                        if (scope.type == 'range') {
 
-                      } else {
+                            scope.from = ui.values[0];
+                            scope.to = ui.values[1];
 
-                          scope.value = ui.value;
-                      }
-                  });
-              };
+                        } else {
 
-              // setting default slider.
-              var slider = $(element).slider();
+                            scope.value = ui.value;
+                        }
+                    });
+                };
 
-              // watches.
+                // setting default slider.
+                var slider = $(element).slider();
 
-              // register scope changes (scope --> slider).
-              angular.forEach(['min', 'max', 'step', 'value'], function (prop) {
+                // watches.
 
-                  scope.$watch(prop, function (val) {
+                // register scope changes (scope --> slider).
+                angular.forEach(['min', 'max', 'step', 'value'], function (prop) {
 
-                      // normalize.
-                      if (!angular.isNumber(val)) {
+                    scope.$watch(prop, function (val) {
 
-                          val = parseFloat(val);
-                      }
+                        // normalize.
+                        if (!angular.isNumber(val)) {
 
-                      // validate.
-                      if (!angular.isNumber) {
+                            val = parseFloat(val);
+                        }
 
-                          return;
-                      }
+                        // validate.
+                        if (!angular.isNumber) {
 
-                      // update slider.
-                      slider.slider('option', prop, parseFloat(val));
-                  });
-              });
+                            return;
+                        }
 
-              // set range value watch.
-              scope.$watchCollection('[from, to]', function (vals) {
-                  debugger
-                  slider.slider('option', 'values', vals);
-              });
+                        // update slider.
+                        slider.slider('option', prop, parseFloat(val));
+                    });
+                });
 
-              // update orientation on changes.
-              scope.$watch('orientation', function (val) {
+                // set range value watch.
+                scope.$watchCollection('[from, to]', function (vals) {
+                    slider.slider('option', 'values', vals);
+                });
 
-                  // backup old options.
-                  var old = slider.slider('option');
+                // update orientation on changes.
+                scope.$watch('orientation', function (val) {
 
-                  // setting orientation.
-                  old.orientation = val || 'horizontal';
+                    // backup old options.
+                    var old = slider.slider('option');
 
-                  // remove old slider.
-                  slider.slider('destroy');
+                    // setting orientation.
+                    old.orientation = val || 'horizontal';
 
-                  // regenerate new slider with the new type from old settings.
-                  slider = $(element).slider(old);
-              });
+                    // remove old slider.
+                    slider.slider('destroy');
 
-              // update scope trigger method (change/slide)
-              scope.$watch('trigger', function (val) {
+                    // regenerate new slider with the new type from old settings.
+                    slider = $(element).slider(old);
+                });
 
-                  if (val == 'change') {
+                // update scope trigger method (change/slide)
+                scope.$watch('trigger', function (val) {
 
-                      slider.slider('option', 'slide', null);
-                      slider.slider('option', 'change', updateOnChange);
+                    if (val == 'change') {
 
-                  } else {
+                        slider.slider('option', 'slide', null);
+                        slider.slider('option', 'change', updateOnChange);
 
-                      slider.slider('option', 'change', null);
-                      slider.slider('option', 'slide', updateOnChange);
-                  }
-              });
+                    } else {
 
-              // handle type changes.
-              scope.$watch('type', function (val) {
+                        slider.slider('option', 'change', null);
+                        slider.slider('option', 'slide', updateOnChange);
+                    }
+                });
 
-                  // backup old options.
-                  var old = slider.slider('option');
+                // handle type changes.
+                scope.$watch('type', function (val) {
 
-                  // ensure slider callbacks attached.
-                  if (!old.slide && !old.change) {
+                    // backup old options.
+                    var old = slider.slider('option');
 
-                      old.slide = updateOnChange;
-                  }
+                    // ensure slider callbacks attached.
+                    if (!old.slide && !old.change) {
 
-                  // jquery keyboard navigation bug when no step defined.
-                  if (isNaN(old.step)) {
+                        old.slide = updateOnChange;
+                    }
 
-                      old.step = 1;
-                  };
+                    // jquery keyboard navigation bug when no step defined.
+                    if (isNaN(old.step)) {
 
-                  switch (val) {
+                        old.step = 1;
+                    };
 
-                      case 'from':
+                    switch (val) {
 
-                          if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
+                        case 'from':
 
-                              old.value = old.values[0];
-                          }
+                            if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
 
-                          old.values = null;
-                          old.range = 'max';
-                          break
+                                old.value = old.values[0];
+                            }
 
-                      case 'to':
+                            old.values = null;
+                            old.range = 'max';
+                            break
 
-                          if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
+                        case 'to':
 
-                              old.value = old.values[1];
-                          }
+                            if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
 
-                          old.values = null;
-                          old.range = 'min';
-                          break
+                                old.value = old.values[1];
+                            }
 
-                      case 'range':
+                            old.values = null;
+                            old.range = 'min';
+                            break
 
-                          if (old.range == 'max') {
+                        case 'range':
 
-                              old.values = [old.value, old.max];
+                            if (old.range == 'max') {
 
-                          } else if (old.range == 'min') {
+                                old.values = [old.value, old.max];
 
-                              old.values = [old.min, old.value];
+                            } else if (old.range == 'min') {
 
-                          } else if (!old.range) {
+                                old.values = [old.min, old.value];
 
-                              if (!(angular.isArray(old.values) && old.values.length == 2)) {
+                            } else if (!old.range) {
 
-                                  old.values = [old.min, old.max];
-                              }
-                          }
+                                if (!(angular.isArray(old.values) && old.values.length == 2)) {
 
-                          old.value = null;
-                          old.range = true;
+                                    old.values = [old.min, old.max];
+                                }
+                            }
 
-                          break
+                            old.value = null;
+                            old.range = true;
 
-                      default:
+                            break
 
-                          if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
+                        default:
 
-                              old.value = old.values[0];
-                          }
+                            if (old.range && old.range != 'min' && old.range != 'max' && old.values) {
 
-                          old.values = null;
-                          old.range = false;
-                          break;
-                  }
+                                old.value = old.values[0];
+                            }
 
-                  // remove old slider.
-                  slider.slider('destroy');
+                            old.values = null;
+                            old.range = false;
+                            break;
+                    }
 
-                  // regenerate new slider with the new type from old settings.
-                  slider = $(element).slider(old);
-              });
-          }
-      }
-  });
+                    // remove old slider.
+                    slider.slider('destroy');
+
+                    // regenerate new slider with the new type from old settings.
+                    slider = $(element).slider(old);
+                });
+            }
+        }
+    });
+
+})();

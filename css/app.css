@@ -1,20 +1,30 @@
 /* app css stylesheet */
 
 slider {
-	
-	display: inline-block !important;
-	width: 200px !important;	
-	height: 4px !important;
-	vertical-align: middle !important;
+  display: inline-block !important;
+  width: 200px !important;
+  height: 4px !important;
+  vertical-align: middle !important;
 }
 
-slider .ui-slider-handle
-{
-	width: 10px !important;
-	height: 10px !important;
-	border-radius: 10px !important;
-	top: -4px !important;
-	margin-left: -5px !important;
-	background: #008EB9 !important;
-	border-color: #00799F !important;
+slider .ui-slider-handle {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 10px !important;
+  top: -4px !important;
+  margin-left: -5px !important;
+  background: #008EB9 !important;
+  border-color: #00799F !important;
+}
+* {
+  box-sizing: border-box;
+}
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.small-slider {
+  display: inline-block;
+  max-width: 200px;
+  width: 20%;
 }
