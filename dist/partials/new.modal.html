@@ -1,0 +1,20 @@
+<div data-ng-click="close()" class="modal-bg" >
+</div>
+<div class="modal modal-medium">
+    <h1>Add new appartment</h1>
+    <form data-ng-submit="addAppartment(newEntry)">
+        <h2>General</h2>
+        <label>City: <input required data-ng-model="newEntry.city" type="text" placeholder='City' /></label>
+        <label>Address: <input required data-ng-model="newEntry.street" type="text" placeholder='Address' /></label>
+        <label>Rooms: <input required data-ng-model="newEntry.rooms" type="number" step="1" min="0" placeholder='Rooms' /></label>
+        <label>Price: <input required data-ng-model="newEntry.price" type="number" step="100" min="0" placeholder='Price' /></label>
+        <hr />
+        <h2>Feature</h2>
+        <label data-ng-repeat="feature in features">
+            {{feature}} <input data-ng-click="toggleSelection(feature)" type="checkbox">
+            {{$last ? '' : '|'}}
+        </label>
+        <input type="submit">
+    </form>
+    <a data-ng-click='close()' class="close-modal">×</a>
+</div>
