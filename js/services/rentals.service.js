@@ -1,11 +1,9 @@
 (function(){
 'use strict';
   angular.module('myApp').factory('rentalsFactory', [ 'demographic', 'features', function (demo, feat) {
-
-    return [
-
+    var latestId = 0;
+    var fixtures = [
         {
-            id: 0,
             city: demo.cities[0],
             street: demo.streets[0],
             rooms: 3,
@@ -18,7 +16,6 @@
         },
 
         {
-            id: 1,
             city: demo.cities[1],
             street: demo.streets[1],
             rooms: 3,
@@ -29,7 +26,6 @@
         },
 
         {
-            id: 2,
             city: demo.cities[2],
             street: demo.streets[0],
             rooms: 2,
@@ -41,7 +37,6 @@
         },
 
         {
-            id: 3,
             city: demo.cities[3],
             street: demo.streets[0],
             rooms: 5,
@@ -55,7 +50,6 @@
         },
 
         {
-            id: 4,
             city: demo.cities[3],
             street: demo.streets[3],
             rooms: 4,
@@ -69,7 +63,6 @@
         },
 
         {
-            id: 5,
             city: demo.cities[2],
             street: demo.streets[1],
             rooms: 7,
@@ -80,5 +73,18 @@
             ]
         }
     ];
+    angular.forEach(fixtures, function (appartment) {
+        appartment.id = latestId++;
+    });
+    return {
+        appartments: fixtures,
+        addAppartment: function (newAppartment) {
+            newAppartment.id = latestId++;
+            fixtures.push(newAppartment);
+        },
+        removeById: function (id) {
+            console.log('removeById called with ', id);
+        }
+    };
   }]);
 })();

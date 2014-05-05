@@ -26,8 +26,9 @@ slider .ui-slider-handle {
 .small-slider {
   display: inline-block;
   max-width: 160px;
-  margin: 5px;
+  margin: 15px;
   width: 20%;
+  vertical-align: middle;
 }
 
 .modal-bg {
@@ -110,3 +111,9 @@ ul.features {
   width: 50%;
   padding: 20px;
 }
+
+form.filterForm input {
+  padding: 5px;
+  vertical-align: middle;;
+}
+

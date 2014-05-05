@@ -3,7 +3,8 @@
   //Your code goes here.
 
   angular.module('myApp').controller('mainController', ['$scope', 'rentalsFactory', 'filterStore', '$window', '$filter', function ($scope, rentalsFactory, filterStore, $window, $filter) {
-    $scope.matchedRentals = rentalsFactory;
+    var appartments = rentalsFactory.appartments;
+    $scope.matchedRentals = appartments;
     // Usually, I would tie editMode with URL to trigger separate route
     // but for sake of prototyping, I would go with parentCtrl object & binding to it
     $scope.editMode = {on: false};
@@ -11,28 +12,22 @@
       $scope.editMode.on = true;
     };
     $scope.template_url = 'partials/appartment.html';
-    $scope.removeById = function (id) {
-      // did want to move this to factory, but due to 1.1.5 nature
-      // it was just too much trouble, given time constraint
-      rentalsFactory = $window.jQuery.grep(rentalsFactory, function (app) {
-        return app.id !== id;
-      });
-    };
+    $scope.removeById = rentalsFactory.removeById;
     function getFilteredList(appartmentList) {
-      return $filter('filter')(($filter('filter')(appartmentList, filterStore.filterBase())), filterStore.filterRanges(), filterStore.rangeCompare);
+      return $filter('filter')(($filter('filter')(appartmentList, filterStore.filterBase())), filterStore.filterAdvanced(), filterStore.rangeCompare);
     }
 
-    $scope.$watch(function(){ return rentalsFactory; }, function(){
-      $scope.matchedRentals = getFilteredList(rentalsFactory);
+    $scope.$watch(function(){ return appartments; }, function(){
+      $scope.matchedRentals = getFilteredList(appartments);
     }, true);
 
     $scope.$watch(function(){
-      return angular.extend({}, filterStore.filterBase(), filterStore.filterRanges());
+      return angular.extend({}, filterStore.filterBase(), filterStore.filterAdvanced());
     }, function (newValue, oldValue) {
-      // rentals | filter:filterBase | filter:filterRanges:rangeCompare could be done in view,
+      // rentals | filter:filterBase | filter:filterAdvanced:rangeCompare could be done in view,
       // but we need it in 3 different places which will make 3 expensive watches thus this $watch
       if (newValue && !angular.equals(newValue, oldValue)) {
-        $scope.matchedRentals = getFilteredList(rentalsFactory);
+        $scope.matchedRentals = getFilteredList(appartments);
       }
     }, true);
   }]);

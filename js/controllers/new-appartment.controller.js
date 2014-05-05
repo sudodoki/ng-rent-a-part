@@ -14,13 +14,8 @@
     $scope.close = function close(){
       $scope.editMode.on = false;
     };
-    $scope.addRoom = function addRoom(newRoom) {
-      var ids = $window.jQuery.map(rentalsFactory, function (app) {
-        return app.id;
-      }), maxId;
-      maxId = $window.Math.max.apply($window.Math, ids);
-      newRoom.id = maxId + 1;
-      rentalsFactory.push(newRoom);
+    $scope.addAppartment = function addAppartment(newRoom) {
+      rentalsFactory.addAppartment(newRoom);
       $scope.newEntry = { features: []};
       $scope.close();
     };
