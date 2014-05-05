@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "grunt connect:server watch:dev",
     "build": "grunt",
-    "dev": "grunt watch:dev"
+    "rebuild": "grunt watch:rebuild"
   },
   "author": "sudodoki <smd.deluzion@gmail.com> (http://sudodoki.name/)",
   "license": "MIT",
@@ -20,6 +21,7 @@
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-connect": "~0.7.1"
   }
 }
