@@ -15,63 +15,13 @@
 
     <body data-ng-cloak="">
 
-        <div class="content" data-ng-controller="mainController">
-            <h1>Rentals</h1>
-            <br/>
-            <form class="filterForm" data-ng-controller="filterController">
-                <input data-ng-model="filterBase.city" type="text" placeholder="Search city…">
-                <input data-ng-model="filterBase.street" type="text" placeholder="Search address…">
-                <label>
-
-                    Rooms <div class="small-slider" data-slider type="range" min="{{filterValues.rooms.min}}" max="{{filterValues.rooms.max}}" from="filterAdvanced.rooms.from" to="filterAdvanced.rooms.to">
-                    </div>
-                </label>
-                <label>
-                    Price <div class="small-slider" data-slider type="range"min="{{filterValues.price.min}}" max="{{filterValues.price.max}}" from="filterAdvanced.price.from" to="filterAdvanced.price.to"></div>
-                </label>
-                <br/>
-                <label data-ng-repeat="feature in filterValues.features">
-                    {{feature}} <input data-ng-click="toggleSelection(feature)" type="checkbox">
-                    {{$last ? '' : '|'}}
-                </label>
-
-            </form>
-            <a class='active-link' data-ng-click="activateEdit()" href='#'>Add Appartment</a>
-            <hr/>
-            <h2 data-ng-if="!matchedRentals.length">No appartments much this criteria, try something else.</h2>
-            <div data-ng-if="matchedRentals.length">
-                <div class="appartment" data-ng-repeat="appartment in matchedRentals">
-                <div ng-include="template_url"></div>
-                </div>
-                <hr/><p><strong>Matches</strong> {{matchedRentals.length}} results</p>
-            </div>
-            <div data-ng-controller="newAppartmentController">
-                <div data-ng-click="close()" data-ng-show='editMode.on' class="modal-bg" >
-                </div>
-                <div data-ng-show='editMode.on' class="modal modal-medium">
-                    <h1>Add new appartment</h1>
-                    <form data-ng-submit="addAppartment(newEntry)">
-                        <h2>General</h2>
-                        <label>City: <input required data-ng-model="newEntry.city" type="text" placeholder='City' /></label>
-                        <label>Address: <input required data-ng-model="newEntry.street" type="text" placeholder='Address' /></label>
-                        <label>Rooms: <input required data-ng-model="newEntry.rooms" type="number" step="1" min="0" placeholder='Rooms' /></label>
-                        <label>Price: <input required data-ng-model="newEntry.price" type="number" step="100" min="0" placeholder='Price' /></label>
-                        <hr />
-                        <h2>Feature</h2>
-                        <label data-ng-repeat="feature in features">
-                            {{feature}} <input data-ng-click="toggleSelection(feature)" type="checkbox">
-                            {{$last ? '' : '|'}}
-                        </label>
-                        <input type="submit">
-                    </form>
-                    <a data-ng-click='close()' class="close-modal">×</a>
-                </div>
-            </div>
-        </div>
+        <div class="content" data-ui-view="main" ></div>
+        <div data-ui-view="modal"></div>
         <!-- scripts -->
 
         <!-- build:js lib.min.js -->
         <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="lib/jquery/dist/jquery.js"></script>
 
         <script src="lib/jquery-ui/ui/jquery.ui.core.js"></script>
@@ -82,6 +32,7 @@
 
         <!-- build:js app.min.js -->
         <script src="js/app.js"></script>
+        <script src="js/router.js"></script>
         <script src="js/services/demographic.service.js"></script>
         <script src="js/services/features.service.js"></script>
         <script src="js/services/filterStore.service.js"></script>

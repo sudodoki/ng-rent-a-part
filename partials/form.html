@@ -1,0 +1,18 @@
+<form class="filterForm" data-ng-controller="filterController">
+    <input data-ng-model="filterBase.city" type="text" placeholder="Search city…">
+    <input data-ng-model="filterBase.street" type="text" placeholder="Search address…">
+    <label>
+
+        Rooms <div class="small-slider" data-slider type="range" min="{{filterValues.rooms.min}}" max="{{filterValues.rooms.max}}" from="filterAdvanced.rooms.from" to="filterAdvanced.rooms.to">
+        </div>
+    </label>
+    <label>
+        Price <div class="small-slider" data-slider type="range"min="{{filterValues.price.min}}" max="{{filterValues.price.max}}" from="filterAdvanced.price.from" to="filterAdvanced.price.to"></div>
+    </label>
+    <br/>
+    <label data-ng-repeat="feature in filterValues.features">
+        {{feature}} <input data-ng-click="toggleSelection(feature)" type="checkbox">
+        {{$last ? '' : '|'}}
+    </label>
+
+</form>

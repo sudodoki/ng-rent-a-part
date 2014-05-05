@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  angular.module('myApp').controller('newAppartmentController', ['$scope', 'features', 'rentalsFactory', '$window', function ($scope, features, rentalsFactory, $window) {
+  angular.module('myApp').controller('newAppartmentController', ['$scope', '$state', 'features', 'rentalsFactory', '$window', function ($scope, $state, features,  rentalsFactory, $window) {
     $scope.features = angular.copy(features);
     $scope.newEntry = { features: []};
     $scope.toggleSelection = function toggleFeatureSelection(feature) {
@@ -12,7 +12,7 @@
       }
     };
     $scope.close = function close(){
-      $scope.editMode.on = false;
+      $state.go('list');
     };
     $scope.addAppartment = function addAppartment(newRoom) {
       rentalsFactory.addAppartment(newRoom);

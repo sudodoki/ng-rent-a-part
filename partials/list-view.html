@@ -1,0 +1,12 @@
+<h1>Rentals</h1>
+<br/>
+<div data-ng-include="'partials/form.html'"></div>
+<a class='active-link' data-ng-click="activateEdit()" data-ui-sref="addToList">Add Appartment</a>
+<hr/>
+<h2 data-ng-if="!matchedRentals.length">No appartments much this criteria, try something else.</h2>
+<div data-ng-if="matchedRentals.length">
+    <div class="appartment" data-ng-repeat="appartment in matchedRentals">
+    <div ng-include="'partials/appartment.html'"></div>
+    </div>
+    <hr/><p><strong>Matches</strong> {{matchedRentals.length}} results</p>
+</div>

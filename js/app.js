@@ -2,5 +2,5 @@
 (function(){
   'use strict';
   // app declaration
-  angular.module('myApp', []);
+  angular.module('myApp', ['ui.router']);
 })();
