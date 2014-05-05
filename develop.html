@@ -43,7 +43,7 @@
                 <div class="appartment" data-ng-repeat="appartment in matchedRentals">
                 <div ng-include="template_url"></div>
                 </div>
-                <p><hr/><strong>Matches</strong> {{matchedRentals.length}} results</p>
+                <hr/><p><strong>Matches</strong> {{matchedRentals.length}} results</p>
             </div>
             <div data-ng-controller="newAppartmentController">
                 <div data-ng-click="close()" data-ng-show='editMode.on' class="modal-bg" >

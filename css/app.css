@@ -117,3 +117,6 @@ form.filterForm input {
   vertical-align: middle;;
 }
 
+.appartment:last-of-type + hr {
+  clear: both;
+}
