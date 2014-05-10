@@ -8,8 +8,8 @@
         url: '/',
         views: {
           main: {
-            controller: "mainController",
-            templateUrl: "partials/list-view.html"
+            controller: 'mainController',
+            templateUrl: 'partials/list-view.html'
           }
         }
       })
@@ -17,12 +17,21 @@
         url: '/add-new',
         views: {
           main: {
-            controller: "mainController",
-            templateUrl: "partials/list-view.html"
+            controller: 'mainController',
+            templateUrl: 'partials/list-view.html'
           },
           modal: {
-            controller: "newAppartmentController",
-            templateUrl: "partials/new.modal.html"
+            controller: 'newAppartmentController',
+            templateUrl: 'partials/new.modal.html'
+          }
+        }
+      })
+      .state('map', {
+        url: '/map',
+        views: {
+          main: {
+            controller: 'mapController',
+            templateUrl: 'partials/map.html'
           }
         }
       })
