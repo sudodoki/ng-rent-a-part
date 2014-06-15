@@ -35,5 +35,14 @@
           }
         }
       })
+      .state('graph', {
+        url: '/graph',
+        views: {
+          main: {
+            controller: 'graphController',
+            templateUrl: 'partials/graph.html'
+          }
+        }
+      })
   }]);
 })();
