@@ -7,7 +7,7 @@ module.exports = function (grunt) {
         options: {
           open: 'http://0.0.0.0:8080/develop.html',
           port: 8080,
-          livereload: 35729
+          livereload: 35753
         }
       }
     },
@@ -15,14 +15,14 @@ module.exports = function (grunt) {
       dev: {
         files: ['**/*', '!node_modules/**', '!lib/**'],
         options: {
-          livereload: true
+          livereload: 35753
         }
       },
       rebuild: {
         files: ['**/*', '!node_modules/**', '!lib/**'],
         tasks: ['default'],
         options: {
-          livereload: true
+          livereload: 35753
         }
       }
     },
