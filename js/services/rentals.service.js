@@ -83,7 +83,12 @@
             fixtures.push(newAppartment);
         },
         removeById: function (id) {
-            console.log('removeById called with ', id);
+            var index = fixtures.map(function(app){return app.id}).indexOf(id);
+            if (index > -1) {
+                fixtures.splice(index, 1);
+                return true;
+            }
+            return false;
         }
     };
   }]);
