@@ -5,7 +5,7 @@
     var svg = d3.select('#map').append('svg')
               .attr('width', width)
               .attr('height', height);
-    var baseUrl = $window.location.origin;
+    var baseUrl = $window.location.origin + $window.location.pathname;
     d3.json(baseUrl + 'geo-source/isr.json', function (error, isr) {
       if (error) { return console.error(error); }
 
