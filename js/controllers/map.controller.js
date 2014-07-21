@@ -1,12 +1,13 @@
 (function(){
   'use strict';
-  angular.module('myApp').controller('mapController', ['topojson', 'd3', '$window', function (topojson, d3, $window) {
+  angular.module('myApp').controller('mapController', ['topojson', 'd3', '$window', '$scope',function (topojson, d3, $window, $scope) {
     var width = 960, height = 1160;
     var svg = d3.select('#map').append('svg')
               .attr('width', width)
               .attr('height', height);
-    var baseUrl = $window.location.origin + $window.location.pathname;
-    d3.json(baseUrl + 'geo-source/isr.json', function (error, isr) {
+    $scope.baseUrl = $window.location.origin + '/' + $window.location.pathname.replace(/\/(.*\.html)$/, '');
+    $scope.mapJSON = $scope.baseUrl + 'geo-source/isr.json';
+    d3.json($scope.mapJSON, function (error, isr) {
       if (error) { return console.error(error); }
 
       var subunits = topojson.feature(isr, isr.objects.subunits);
